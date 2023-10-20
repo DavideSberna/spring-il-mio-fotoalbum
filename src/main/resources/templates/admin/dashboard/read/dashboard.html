@@ -27,7 +27,17 @@
 	</header>
 	
 	<main class="bg-light vh-100">
-		<div class="text-center pt-5 pb-4">			
+		<div class="text-center pt-5 pb-4">	
+			<div>
+			<div sec:authorize="hasAnyAuthority('USER', 'ADMIN')">
+				<p class="d-inline" sec:authentication="name"></p>
+				<a href="/logout">Logout</a>
+			</div>
+			<div sec:authorize="!hasAnyAuthority('USER', 'ADMIN')">
+				<a href="/login">Login</a>
+			</div>
+			
+		</div>		
 			<form>
 			    <div class="mb-3 d-flex align-items-center">
 			        <input type="text" class="form-control w-auto d-inline me-2" name="title" id="title" placeholder="Titolo foto" th:value="${title}">

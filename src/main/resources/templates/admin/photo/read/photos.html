@@ -28,7 +28,7 @@
 	
 	<main class="bg-light vh-100">
 		<div class="card-deck">
-			<a class="btn btn-primary ms-2" th:href="@{/dashboard/photos/create}" role="button">+</a>
+			<a class="btn btn-primary ms-2" th:href="@{/dashboard/photos/create}" role="button" sec:authorize="hasAnyAuthority('ADMIN')">+</a>
 			<div class="row">				
 			    <div th:each="photo : ${photos}" class="col-4">
 					<div class="card">			
@@ -37,8 +37,8 @@
 				            <h5 class="card-title" th:text="${photo.title}">Photo Title</h5>
 				            <p class="card-text" th:text="${photo.description}">Photo Description</p>
 							<a cass="btn btn-primary ms-2" th:href="@{/dashboard/photos/{id}(id = ${photo.id})}" role="button">guarda</a>
-							<a class="btn btn-primary ms-2" th:href="@{/dashboard/photos/edit/{id}(id = ${photo.id})}" role="button">modifica</a>
-							<form class="d-inline" id="pizza-form" th:action="@{/dashboard/photos/delete/{id}(id=${photo.id})}" method="post">
+							<a class="btn btn-primary ms-2" sec:authorize="hasAnyAuthority('ADMIN')" th:href="@{/dashboard/photos/edit/{id}(id = ${photo.id})}" role="button">modifica</a>
+							<form class="d-inline" sec:authorize="hasAnyAuthority('ADMIN')" id="pizza-form" th:action="@{/dashboard/photos/delete/{id}(id=${photo.id})}" method="post">
 									 <button type="submit" class="btn btn-danger btn-sm">Elimina</button>
 							</form>			            
 				        </div>

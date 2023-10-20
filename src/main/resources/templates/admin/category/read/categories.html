@@ -27,7 +27,7 @@
 	</header>
 	
 	<main class="bg-light vh-100">
-		<a class="btn btn-primary ms-2" th:href="@{/dashboard/categories/create}" role="button">+</a>
+		<a class="btn btn-primary ms-2" sec:authorize="hasAnyAuthority('ADMIN')" th:href="@{/dashboard/categories/create}" role="button">+</a>
 		<table class="table">
 		    <thead>
 		        <tr>
@@ -42,8 +42,8 @@
 		            <td th:text="${category.name}">Category Name</td>
 		            <td>
 						<a class="btn btn-success btn-sm" th:href="@{/dashboard/categories/{id}(id=${category.id})}">guarda</a>
-						<a class="btn btn-success btn-sm" th:href="@{/dashboard/categories/edit/{id}(id=${category.id})}">modifica</a>
-						<form class="d-inline" id="pizza-form" th:action="@{/dashboard/categories/delete/{id}(id=${category.id})}" method="post">
+						<a class="btn btn-success btn-sm" sec:authorize="hasAnyAuthority('ADMIN')" th:href="@{/dashboard/categories/edit/{id}(id=${category.id})}">modifica</a>
+						<form class="d-inline" id="pizza-form" sec:authorize="hasAnyAuthority('ADMIN')" th:action="@{/dashboard/categories/delete/{id}(id=${category.id})}" method="post">
 							 <button type="submit" class="btn btn-danger btn-sm">Elimina</button>
 						</form>
 					</td>

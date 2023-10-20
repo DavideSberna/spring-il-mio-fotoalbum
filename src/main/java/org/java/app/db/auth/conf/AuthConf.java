@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 
 
 @Configuration
@@ -23,8 +24,18 @@ public class AuthConf {
 			
 				.authorizeHttpRequests()
 				.requestMatchers("/login").permitAll()
-				.requestMatchers("/dashboard/**").hasAuthority("ADMIN")
-				
+				.requestMatchers("/").permitAll()
+				.requestMatchers("/dashboard").hasAnyAuthority("USER", "ADMIN")
+				.requestMatchers("/dashboard/photos").hasAnyAuthority("USER", "ADMIN")
+				.requestMatchers("/dashboard/categories").hasAnyAuthority("USER", "ADMIN")
+				.requestMatchers(new RegexRequestMatcher("/dashboard/photos/[0-9]+", null)).hasAnyAuthority("USER", "ADMIN")
+				.requestMatchers(new RegexRequestMatcher("/dashboard/categories/[0-9]+", null)).hasAnyAuthority("USER", "ADMIN")
+				.requestMatchers("/dashboard/photos/create").hasAuthority("ADMIN")
+				.requestMatchers("/dashboard/categories/create").hasAuthority("ADMIN")
+				.requestMatchers(new RegexRequestMatcher("/dashboard/photos/edit/[0-9]+", null)).hasAuthority("ADMIN")
+				.requestMatchers(new RegexRequestMatcher("/dashboard/categories/edit/[0-9]+", null)).hasAuthority("ADMIN")
+				.requestMatchers(new RegexRequestMatcher("/dashboard/photos/delete/[0-9]+", null)).hasAuthority("ADMIN")
+				.requestMatchers(new RegexRequestMatcher("/dashboard/categories/delete/[0-9]+", null)).hasAuthority("ADMIN")
 				.and().formLogin()
 				.and().logout();
 			
