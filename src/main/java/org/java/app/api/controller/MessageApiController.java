@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+
 @RestController
 @CrossOrigin
 @RequestMapping("api/v1.0/message")
@@ -21,11 +23,8 @@ public class MessageApiController {
 	
 
     @PostMapping("/send")
-    public ResponseEntity<String> sendMessage(@RequestBody Message message) {
-       
-    	
+    public ResponseEntity<String> sendMessage(@Valid @RequestBody Message message) {
         messageService.save(message);
-
         return ResponseEntity.ok("Messaggio inviato e utente creato con successo.");
     }
 	

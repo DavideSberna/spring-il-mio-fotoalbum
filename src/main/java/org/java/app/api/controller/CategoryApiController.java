@@ -1,58 +1,55 @@
 package org.java.app.api.controller;
 
- 
 import java.util.List;
 
-import org.java.app.db.pojo.Photo; 
+import org.java.app.db.pojo.Category;
 import org.java.app.db.serv.CategoryService;
-import org.java.app.db.serv.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin
-@RequestMapping("api/v1.0/photos")
-public class PhotoApiController {
+@RequestMapping("api/v1.0/categories")
+public class CategoryApiController {
+	
+	
 	
 	@Autowired
-	private PhotoService photoService;
-	
+	private CategoryService categoryService;
 	
 	@GetMapping
-	public ResponseEntity<List<Photo>> getAllPizzas(@RequestParam(value = "query", required = false) String name){
+	public ResponseEntity<List<Category>> getAllCategories(@RequestParam(value = "query", required = false) String name){
 	
-		List<Photo> photos;
+		List<Category> categories;
 		
 		if (name != null && !name.isEmpty()) {
 	        
-			photos = photoService.findByTitle(name);
+			categories = categoryService.findByName(name);
 	    } else {
 	       
-	    	photos = photoService.findAll();
+	    	categories = categoryService.findAll();
 	    }
 		
-		return new ResponseEntity<>(photos, HttpStatus.OK);
+		return new ResponseEntity<>(categories, HttpStatus.OK);
 	}
 	
 	@GetMapping("{id}")
-	public ResponseEntity<Photo> getPizzaId(@PathVariable int id){
+	public ResponseEntity<Category> getCategoryId(@PathVariable int id){
 	
-		Photo photo = photoService.findById(id);
+		Category category = categoryService.findById(id);
 		 
-		 if(photo == null) {
+		 if(category == null) {
 			 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		 }
 		
-		return new ResponseEntity<>(photo, HttpStatus.OK);
+		return new ResponseEntity<>(category, HttpStatus.OK);
 	}
 	
 	

@@ -13,6 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class AuthConf {
 
+	
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http)
 		throws Exception {
@@ -21,7 +22,8 @@ public class AuthConf {
 			http.csrf().disable()
 			
 				.authorizeHttpRequests()
-				.requestMatchers("/**").permitAll()
+				.requestMatchers("/login").permitAll()
+				.requestMatchers("/dashboard/**").hasAuthority("ADMIN")
 				
 				.and().formLogin()
 				.and().logout();

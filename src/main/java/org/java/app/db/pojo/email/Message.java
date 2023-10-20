@@ -8,6 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Message {
@@ -16,13 +18,17 @@ public class Message {
     private int id;
 
     
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
+    @NotBlank(message = "L'email non può essere vuota. Inserisci un valore valido.")
+    @Email(message = "L'email non è valida. Inserisci un valore valido.")
     private String email;
     
     @Column(nullable = false)
+    @NotBlank(message = "Il nome non può essere vuoto. Inserisci un valore valido.")
     private String name;
 
     @Column(nullable = false, columnDefinition = "TEXT")
+    @NotBlank(message = "Il messaggio non può essere vuoto. Inserisci un valore valido.")
     private String message;
 
     @ManyToOne

@@ -24,7 +24,11 @@ public class DashboardController {
 	@Autowired
 	private CategoryService categoryService;
 	
-	
+	@GetMapping("/")
+	public String redirectDashboard() {
+		
+		return "redirect:/dashboard";
+	}
 	
 	@GetMapping("/dashboard")
 	public String getAll(
