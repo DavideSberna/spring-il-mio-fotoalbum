@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css">
+    <title>Pizzeria</title>
+    
+    
+    <style>
+		
+		img{
+		  height: 350px; 
+		  object-fit: cover; 
+		}
+		
+	</style>
+</head>
+<body>
+	<header class="bg-dark">
+		<footer class="container">
+			<section class="pt-3 pb-3 row">
+				<div class="col-3 d-flex align-items-center">
+					<h3 class="p-0 m-0 text-white">La migliore pizza</h3>
+				</div>
+			</section>
+		</footer>
+	</header>
+	
+	<main class="bg-light vh-100">
+		<div class="card-deck">
+			<a class="btn btn-primary ms-2" th:href="@{/dashboard/photos/create}" role="button">+</a>
+			<div class="row">				
+			    <div th:each="photo : ${photos}" class="col-4">
+					<div class="card">			
+				        <img th:src="${photo.url}" class="card-img-top" th:alt="${photo.title}">
+				        <div class="card-body">
+				            <h5 class="card-title" th:text="${photo.title}">Photo Title</h5>
+				            <p class="card-text" th:text="${photo.description}">Photo Description</p>
+							<a cass="btn btn-primary ms-2" th:href="@{/dashboard/photos/{id}(id = ${photo.id})}" role="button">guarda</a>
+							<a class="btn btn-primary ms-2" th:href="@{/dashboard/photos/edit/{id}(id = ${photo.id})}" role="button">modifica</a>
+							<form class="d-inline" id="pizza-form" th:action="@{/dashboard/photos/delete/{id}(id=${photo.id})}" method="post">
+									 <button type="submit" class="btn btn-danger btn-sm">Elimina</button>
+							</form>			            
+				        </div>
+					</div>
+			    </div>
+			</div>
+		</div>
+	</main>
+     
+</body>
+</html>

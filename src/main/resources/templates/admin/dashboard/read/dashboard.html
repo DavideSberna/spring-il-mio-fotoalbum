@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css">
+    <title>fotoalbum</title>
+    
+    
+    <style>
+		
+		img{
+		  height: 150px; 
+		  object-fit: cover; 
+		}
+		
+	</style>
+</head>
+<body>
+	<header class="bg-dark">
+		<footer class="container">
+			<section class="pt-3 pb-3 row">
+				<div class="col-3 d-flex align-items-center">
+					<h3 class="p-0 m-0 text-white">La migliore pizza</h3>
+				</div>
+			</section>
+		</footer>
+	</header>
+	
+	<main class="bg-light vh-100">
+		<div class="text-center pt-5 pb-4">			
+			<form>
+			    <div class="mb-3 d-flex align-items-center">
+			        <input type="text" class="form-control w-auto d-inline me-2" name="title" id="title" placeholder="Titolo foto" th:value="${title}">
+			        <button type="submit" class="btn btn-primary ms-2">Cerca</button>
+			    </div>
+			</form>
+		</div>
+		<div class="card-deck">
+			<div class="row">				
+			    <div th:each="photo : ${photos}" class="col-4">
+					<div class="card">			
+				        <img th:src="${photo.url}" class="card-img-top" th:alt="${photo.title}">
+				        <div class="card-body">
+				            <h5 class="card-title" th:text="${photo.title}">Photo Title</h5>
+				            <p class="card-text" th:text="${photo.description}">Photo Description</p>
+				            <a class="btn btn-primary ms-2" th:href="@{/dashboard/photos/{id}(id = ${photo.id})}" role="button">guarda</a>
+				        </div>
+					</div>
+			    </div>
+			</div>
+		</div>
+
+	
+		<table class="table">
+		    <thead>
+		        <tr>
+		            <th>ID</th>
+		            <th>Name</th>
+		            <th>Action</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		        <tr th:each="category : ${categories}">
+		            <td th:text="${category.id}">Category ID</td>
+		            <td th:text="${category.name}">Category Name</td>
+		            <td>
+						<a class="btn btn-success btn-sm" th:href="@{/dashboard/categories/{id}(id=${category.id})}">guarda</a>
+					</td>
+		        </tr>
+		    </tbody>
+		</table>
+	</main>
+     
+</body>
+</html>

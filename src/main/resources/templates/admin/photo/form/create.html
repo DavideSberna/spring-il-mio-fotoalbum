@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css">
+    <title>Pizzeria</title>
+    
+    
+    <style>
+		
+		img{
+		  height: 350px; 
+		  object-fit: cover; 
+		}
+		
+	</style>
+</head>
+<body>
+	<header class="bg-dark">
+		<footer class="container">
+			<section class="pt-3 pb-3 row">
+				<div class="col-3 d-flex align-items-center">
+					<h3 class="p-0 m-0 text-white">La migliore pizza</h3>
+				</div>
+			</section>
+		</footer>
+	</header>
+	
+	 <main class="bg-light vh-100">
+        <div class="container">
+            <h2 class="mt-4">Modifica foto</h2>
+            <form th:action="@{/dashboard/photos/create}" method="post" th:object="${photo}" class="needs-validation" novalidate>
+				
+               <div class="mb-3">
+				    <label for="title" class="form-label">Titolo</label>
+				    <input type="text" class="form-control" id="title" th:field="*{title}" required th:classappend="${#fields.hasErrors('title')} ? 'is-invalid' : ''">
+					<div class="alert alert-danger mt-3" role="alert" th:if="${#fields.hasErrors('title')}">
+						 <ul class="m-0">
+							<li th:each="err : ${#fields.errors('title')}" th:text="${err}"></li>
+						</ul>
+					</div>
+				</div>
+				
+			 
+				<div class="mb-3">
+				    <label for="description" class="form-label">Descrizione</label>
+				    <textarea class="form-control" id="description" th:field="*{description}" required
+				              th:classappend="${#fields.hasErrors('description')} ? 'is-invalid' : ''"></textarea>
+				    <div class="alert alert-danger mt-3" role="alert" th:if="${#fields.hasErrors('description')}">
+						 <ul class="m-0">
+							<li th:each="err : ${#fields.errors('description')}" th:text="${err}"></li>
+						</ul>
+					</div>
+				</div>
+				
+				 
+				<div class="mb-3">
+				    <label for="url" class="form-label">URL</label>
+				    <input type="text" class="form-control" id="url" th:field="*{url}" required th:classappend="${#fields.hasErrors('url')} ? 'is-invalid' : ''">
+				    <div class="alert alert-danger mt-3" role="alert" th:if="${#fields.hasErrors('url')}">
+						 <ul class="m-0">
+							<li th:each="err : ${#fields.errors('url')}" th:text="${err}"></li>
+						</ul>
+					</div>
+				</div>
+
+               
+                <div class="mb-3">
+                    <label class="form-check-label">Visibile</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="visible" checked>
+                        <label class="form-check-label" for="visible">Seleziona questa casella se la foto è visibile</label>
+                    </div>
+                </div>
+
+               
+                <div class="mb-3">
+                    <label class="form-check-label">Categorie</label>
+                    <div class="form-check" th:each="category : ${categories}">
+                        <input class="form-check-input" type="checkbox" th:id="'category-' + ${category.id}" th:field="*{categories}" th:value="${category.id}">
+                        <label class="form-check-label" th:for="'category-' + ${category.id}" th:text="${category.name}"></label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Crea</button>
+            </form>
+        </div>
+    </main>
+     
+</body>
+</html>
