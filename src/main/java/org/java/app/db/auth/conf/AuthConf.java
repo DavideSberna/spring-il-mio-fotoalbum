@@ -11,6 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 
 
+
 @Configuration
 public class AuthConf {
 
@@ -23,8 +24,9 @@ public class AuthConf {
 			http.csrf().disable()
 			
 				.authorizeHttpRequests()
+				.requestMatchers("/webjars/**").permitAll()
 				.requestMatchers("/login").permitAll()
-				.requestMatchers("/").permitAll()
+				.requestMatchers("/**").permitAll()
 				.requestMatchers("/dashboard").hasAnyAuthority("USER", "ADMIN")
 				.requestMatchers("/dashboard/photos").hasAnyAuthority("USER", "ADMIN")
 				.requestMatchers("/dashboard/categories").hasAnyAuthority("USER", "ADMIN")
